@@ -1,0 +1,22 @@
+{
+	"name": "spol/path",
+	"description": "A PHP library for manipulating paths.",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Seb Pollard"
+		}
+	],
+	"require": {
+		"php": ">=5.2"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "3.7.*",
+		"tcz/phpunit-mockfunction": "*@dev",
+		"ext-runkit": "*"
+	},
+	"type": "library",
+	"autoload": {
+		"psr-4": { "Spol\\Path\\": "src/" }
+	}
+}

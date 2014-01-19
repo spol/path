@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="phpunit.php">
+	<testsuites>
+		<testsuite name="Spol/Path">
+			<directory suffix=".php">tests/</directory>
+		</testsuite>
+	</testsuites>
+
+	<logging>
+		<log type="coverage-text" target="php://stdout" showUncoveredFiles="true"/>
+		<log type="coverage-html" target="coverage" title="PHPUnit" charset="UTF-8" yui="true" highlight="true" lowUpperBound="35" highLowerBound="90"/>
+	</logging>
+
+	<filter>
+		<blacklist>
+			<directory suffix=".php">tests</directory>
+			<directory suffix=".php">vendor</directory>
+		</blacklist>
+		<whitelist>
+			<directory suffix=".php">src</directory>
+		</whitelist>
+	</filter>
+</phpunit>
