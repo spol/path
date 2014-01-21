@@ -8,13 +8,10 @@ class Path
 
     public static function getImplementation()
     {
-        switch (self::OS)
-        {
-            case "WINNT":
-                return new WindowsPath();
-                break;
-            default:
-                return new UnixPath();
+        if (strtoupper(substr(self::OS, 0, 3)) == "WIN") {
+            return new WindowsPath();
+        } else {
+            return new UnixPath();
         }
     }
 

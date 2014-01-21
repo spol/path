@@ -10,7 +10,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetImplementation()
     {
-        $nativePathClass = PHP_OS === "WINNT" ? "Spol\Path\WindowsPath" : "Spol\Path\UnixPath";
+        $nativePathClass = strtoupper(substr(PHP_OS, 0, 3)) === "WIN" ? "Spol\Path\WindowsPath" : "Spol\Path\UnixPath";
         $this->assertInstanceOf($nativePathClass, Path::getImplementation());
 
         runkit_constant_redefine("Spol\Path\Path::OS", "WINNT");
