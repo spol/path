@@ -44,6 +44,9 @@ class UnixPathTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('/foo/baz', $UnixPath->combine('/foo/bar', '../baz'));
         $this->assertEquals('/foo/bar/baz', $UnixPath->combine('/foo/bar', './baz'));
         $this->assertEquals('/foo', $UnixPath->combine('/', '../foo'));
+
+        $this->assertEquals('/foo/baz/qux', $UnixPath->combine('/foo/bar', '../baz', 'qux'));
+        $this->assertEquals('/foo/qux', $UnixPath->combine('/foo/bar', '..', 'qux'));
     }
 
     public function testNormalize()

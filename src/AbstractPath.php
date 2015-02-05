@@ -71,9 +71,10 @@ abstract class AbstractPath
         }
     }
 
-    public function combine($one, $two)
+    public function combine(/* args */)
     {
-        return $this->normalize($one . $this->DS . $two);
+        $args = func_get_args();
+        return $this->normalize(implode($this->DS, $args));
     }
 
     /**
