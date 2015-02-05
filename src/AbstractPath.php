@@ -19,6 +19,10 @@ abstract class AbstractPath
             if ($segment === '.') {
                 continue;
             } elseif ($segment === '..' && !(empty($normalizedSegments) || end($normalizedSegments) === '..')) {
+                if (count($normalizedSegments) == 1 && $normalizedSegments[0] == '')
+                {
+                    continue;
+                }
                 array_pop($normalizedSegments);
             } else {
                 array_push($normalizedSegments, $segment);
@@ -29,6 +33,8 @@ abstract class AbstractPath
     }
 
     abstract public function normalizeCase($path);
+
+    abstract public function normalizeSeparators($path);
 
     /* On windows, returns the drive letter of the path,
      * on other platforms it returns the empty string.
@@ -63,6 +69,11 @@ abstract class AbstractPath
 
             return implode($this->DS, $startSegments);
         }
+    }
+
+    public function combine($one, $two)
+    {
+        return $this->normalize($one . $this->DS . $two);
     }
 
     /**

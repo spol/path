@@ -36,6 +36,16 @@ class UnixPathTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('/foo', $UnixPath->resolve('/', '../foo'));
     }
 
+    public function testCombine()
+    {
+        $UnixPath = new UnixPath;
+        $this->assertEquals('/foo/bar', $UnixPath->combine('/foo', '/bar'));
+        $this->assertEquals('/foo/bar', $UnixPath->combine('/foo', 'bar'));
+        $this->assertEquals('/foo/baz', $UnixPath->combine('/foo/bar', '../baz'));
+        $this->assertEquals('/foo/bar/baz', $UnixPath->combine('/foo/bar', './baz'));
+        $this->assertEquals('/foo', $UnixPath->combine('/', '../foo'));
+    }
+
     public function testNormalize()
     {
         $UnixPath = new UnixPath;
@@ -52,6 +62,7 @@ class UnixPathTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('/A/B', $UnixPath->normalize('/A/B/'));
         $this->assertEquals('/A/B', $UnixPath->normalize('/A/./B'));
         $this->assertEquals('/A/B', $UnixPath->normalize('/A/foo/../B'));
+        $this->assertEquals('/foo', $UnixPath->normalize('/../foo'));
     }
 
     public function testNormalizeCase()

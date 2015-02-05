@@ -16,8 +16,14 @@ class WindowsPath extends AbstractPath
 
     public function normalize($path)
     {
-        $path = str_replace('/', '\\', $path);
-        return parent::normalize($path);
+        $path = $this->normalizeSeparators($path);
+        list ($drive, $path) = $this->splitDrive($path);
+        return $drive . parent::normalize($path);
+    }
+
+    public function normalizeSeparators($path)
+    {
+        return str_replace('/', '\\', $path);
     }
 
     public function normalizeCase($path)
@@ -25,9 +31,25 @@ class WindowsPath extends AbstractPath
         return strtolower($path);
     }
 
+    public function splitDrive($path)
+    {
+        $drive = $this->getDrive($path);
+
+        if ($drive)
+        {
+            $path = substr($path, strlen($drive));
+        }
+        else
+        {
+            $drive = '';
+        }
+
+        return [$drive, $path];
+    }
+
     public function getDrive($path)
     {
-        $path = $this->normalize($path);
+        $path = $this->normalizeSeparators($path);
         if (preg_match('{^([A-Z]:\\\\)}i', $path) === 1) {
             return substr($path, 0, 2);
         }

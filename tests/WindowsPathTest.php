@@ -36,6 +36,17 @@ class WindowsPathTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('c:\\foo', $WindowsPath->resolve('c:\\', '..\\foo'));
     }
 
+    public function testCombine()
+    {
+        $WindowsPath = new WindowsPath;
+        $this->assertEquals('c:\\foo\\bar', $WindowsPath->combine('c:\\foo', '\\bar'));
+        $this->assertEquals('c:\\foo\\bar', $WindowsPath->combine('c:\\foo', 'bar'));
+        $this->assertEquals('c:\\foo\\bar', $WindowsPath->combine('c:\\foo\\', 'bar\\'));
+        $this->assertEquals('c:\\foo\\baz', $WindowsPath->combine('c:\\foo\\bar', '..\\baz'));
+        $this->assertEquals('c:\\foo\\bar\\baz', $WindowsPath->combine('c:\\foo\\bar', '.\\baz'));
+        $this->assertEquals('c:\\foo', $WindowsPath->combine('c:\\', '..\\foo'));
+    }
+
     public function testNormalize()
     {
         $WindowsPath = new WindowsPath;
