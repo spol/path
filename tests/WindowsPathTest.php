@@ -67,11 +67,24 @@ class WindowsPathTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('a/b', $WindowsPath->normalizeCase('a/b'));
     }
 
+    public function testParent()
+    {
+        $WindowsPath = new WindowsPath;
+        $this->assertEquals('A\\B', $WindowsPath->parent('A\\B\\C'));
+        $this->assertEquals('A\\B', $WindowsPath->parent('A\\B\\C\\'));
+        $this->assertEquals('c:\\A\\B', $WindowsPath->parent('c:\\A\\B\\C\\'));
+        $this->assertEquals('c:\\A\\B', $WindowsPath->parent('c:\\A\\B\\C\\'));
+        $this->assertEquals('c:\\A', $WindowsPath->parent('c:\\A\\B\\'));
+        $this->assertEquals('c:\\', $WindowsPath->parent('c:\\A\\'));
+        $this->assertEquals(null, $WindowsPath->parent('c:\\'));
+        $this->assertEquals(null, $WindowsPath->parent('\\'));
+    }
+
     public function testGetDrive()
     {
-        $UnixPath = new WindowsPath;
-        $this->assertEquals('', $UnixPath->getDrive('A/B/C'));
-        $this->assertEquals('', $UnixPath->getDrive('/A/B/C'));
-        $this->assertEquals('C:', $UnixPath->getDrive('C:/A/B/C'));
+        $WindowsPath = new WindowsPath;
+        $this->assertEquals('', $WindowsPath->getDrive('A/B/C'));
+        $this->assertEquals('', $WindowsPath->getDrive('/A/B/C'));
+        $this->assertEquals('C:', $WindowsPath->getDrive('C:/A/B/C'));
     }
 }

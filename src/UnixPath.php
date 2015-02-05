@@ -23,4 +23,21 @@ class UnixPath extends AbstractPath
     {
         return '';
     }
+
+    public function parent($path)
+    {
+        if ($path === '' || $path === '/')
+        {
+            return null;
+        }
+
+        $parent = $this->normalize($path . '/..');
+
+        if ($parent === '' && $path[0] === '/')
+        {
+            return '/';
+        }
+
+        return $parent;
+    }
 }

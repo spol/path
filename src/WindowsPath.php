@@ -11,7 +11,7 @@ class WindowsPath extends AbstractPath
         if (empty($path)) {
             return false;
         }
-        return preg_match('{^([A-Z]:|\\\\)}i', $path) === 1;
+        return preg_match('{^([A-Z]:\\\\?)}i', $path) === 1;
     }
 
     public function normalize($path)
@@ -27,8 +27,36 @@ class WindowsPath extends AbstractPath
 
     public function getDrive($path)
     {
-        if (preg_match('{^([A-Z]:|\\\\)}i', $path) === 1) {
+        $path = $this->normalize($path);
+        if (preg_match('{^([A-Z]:\\\\)}i', $path) === 1) {
             return substr($path, 0, 2);
         }
+    }
+
+    public function parent($path)
+    {
+        if ($this->isAbsolute($path))
+        {
+            $drive = $this->getDrive($path);
+        }
+        else {
+            $drive = '';
+        }
+
+        $path = substr($path, strlen($drive));
+
+        if ($path === '' || $path === '\\')
+        {
+            return null;
+        }
+
+        $parent = $this->normalize($path . '\\..');
+
+        if ($parent === '' && $path[0] === '\\')
+        {
+            return $drive . '\\';
+        }
+
+        return $drive . $parent;
     }
 }

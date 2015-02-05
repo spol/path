@@ -74,6 +74,18 @@ class UnixPathTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('..', $UnixPath->commonParent('../A', '../../A'));
     }
 
+    public function testParent()
+    {
+        $UnixPath = new UnixPath;
+        $this->assertEquals('A/B', $UnixPath->parent('A/B/C'));
+        $this->assertEquals('A/B', $UnixPath->parent('A/B/C/'));
+        $this->assertEquals('/A/B', $UnixPath->parent('/A/B/C/'));
+        $this->assertEquals('/A/B', $UnixPath->parent('/A/B/C/'));
+        $this->assertEquals('/A', $UnixPath->parent('/A/B/'));
+        $this->assertEquals('/', $UnixPath->parent('/A/'));
+        $this->assertEquals(null, $UnixPath->parent('/'));
+    }
+
     public function testGetDrive()
     {
         $UnixPath = new UnixPath;
