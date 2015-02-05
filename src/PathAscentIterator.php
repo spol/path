@@ -9,7 +9,7 @@ class PathAscentIterator implements \Iterator
 
     public function __construct($path)
     {
-        $this->path = explode(DIRECTORY_SEPARATOR, $path);
+        $this->path = explode(DIRECTORY_SEPARATOR, rtrim($path, DIRECTORY_SEPARATOR));
         $this->rewind();
     }
 
@@ -38,6 +38,7 @@ class PathAscentIterator implements \Iterator
 
     private function build_path()
     {
-        return implode(DIRECTORY_SEPARATOR, array_slice($this->path, 0, $this->cursor+1)) . DIRECTORY_SEPARATOR;
+        $path = implode(DIRECTORY_SEPARATOR, array_slice($this->path, 0, $this->cursor+1));
+        return ($path === '') ? DIRECTORY_SEPARATOR : $path;
     }
 }

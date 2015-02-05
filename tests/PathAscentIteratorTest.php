@@ -11,10 +11,10 @@ class PathAscentIteratorTest extends \PHPUnit_Framework_TestCase
         $iterator = new PathAscentIterator("/foo/bar/baz/qux");
 
         $expected = array(
-            "/foo/bar/baz/qux/",
-            "/foo/bar/baz/",
-            "/foo/bar/",
-            "/foo/",
+            "/foo/bar/baz/qux",
+            "/foo/bar/baz",
+            "/foo/bar",
+            "/foo",
             "/"
         );
 
