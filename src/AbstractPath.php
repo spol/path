@@ -121,4 +121,23 @@ abstract class AbstractPath
     {
         return explode($this->DS, $path);
     }
+
+    /**
+     * Add support for home folder expansion (e.g. ~/foo) to realpath.
+     *
+     * @param string $path The path to use.
+     * @return string|boolean
+     */
+    public function realpath($path)
+    {
+        // Support the path replacement of ~ with the user's home directory.
+        if (substr($path, 0, 2) === '~/') {
+            $homeDir = getenv('HOME');
+            if ($homeDir !== false) {
+                $path = $homeDir . substr($path, 1);
+            }
+        }
+
+        return realpath($path);
+    }
 }
